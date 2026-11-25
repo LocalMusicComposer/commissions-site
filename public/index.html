@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Johnathan's Commissions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main id="desktop">
+  <nav id="icons" aria-label="Open a window">
+    <button data-open="home">Welcome</button>
+    <button data-open="art">Art comms</button>
+    <button data-open="music">Music comms</button>
+    <button data-open="request">Request</button>
+    <button data-open="queue">Queue</button>
+    <button data-open="gallery">Art gallery</button>
+    <button data-open="jukebox">Jukebox</button>
+    <button data-open="admin">Owner login</button>
+  </nav>
+
+  <section class="win" id="w-home" data-title="Welcome" data-x="230" data-y="30" data-w="460">
+    <h1>Commissions are open.</h1>
+    <p>I'm Johnathan. I draw object-head characters and compose game-style music, and I'm taking commissions to save for college.</p>
+    <p>Open a window from the left to read the details, check the queue, or send a request.</p>
+    <p><button class="btn" data-open="request">Request a commission</button></p>
+  </section>
+
+  <section class="win art" id="w-art" data-title="Art commissions" data-x="260" data-y="70" data-w="520">
+    <h2>Emergency Art Commissions are open</h2>
+    <p>I need to save money for college funds, so I'm opening art commissions to make a decent dent.</p>
+    <h3>Specialties</h3>
+    <ul>
+      <li>Object head OCs mainly. I'm learning humans, so there are object head examples and one human example.</li>
+      <li>Fast delivery: art in as little as 2 days.</li>
+      <li>High-quality work to match my experience.</li>
+    </ul>
+    <h3>Experience</h3>
+    <p>4 years drawing in IbisPaint, mostly cel-shading with clean anatomical structure.</p>
+    <h3>Prices</h3>
+    <p>From <b>$15 USD</b> for a flat colored full body, going up to around <b>$60 USD</b> for 2 fully rendered half bodies.</p>
+    <h3>Payment (in order of preference)</h3>
+    <p>PayPal, CashApp, Venmo</p>
+    <p><a href="https://docs.google.com/document/d/1EU53gxlrldeMXIp0Zeh2bPcaq9cprxblpM7Hi5OETtk/edit?usp=sharing" target="_blank" rel="noopener">Read the art TOS</a> ·
+       <a href="https://johnathans-art-comms.straw.page/home" target="_blank" rel="noopener">Art portfolio and contact links</a></p>
+    <p><button class="btn" data-open="gallery">See examples</button> <button class="btn" data-open="request">Request art</button></p>
+  </section>
+
+  <section class="win music" id="w-music" data-title="Music commissions" data-x="300" data-y="110" data-w="520">
+    <h2>Emergency Music Commissions are open</h2>
+    <p>I need to save for college and I'm currently in debt, so I'm opening music commissions.</p>
+    <h3>Specialties</h3>
+    <ul>
+      <li>Original game OST-style music, simple or complex.</li>
+      <li>Music can take up to a week. SFX is done within 3 days.</li>
+    </ul>
+    <h3>Experience</h3>
+    <p>3 years composing in UltraBox, BeepBox, JummBox, and AbyssBox. I specialize in retro sounds, with some dubstep and rock experience.</p>
+    <h3>Prices</h3>
+    <p><b>$20 USD/hour</b> of work, <b>$40 USD/hour</b> for commercial use, plus 10% for rushed work. SFX uses the same prices.</p>
+    <h3>Payment (in order of preference)</h3>
+    <p>PayPal, CashApp, Venmo</p>
+    <h3>How to commission me</h3>
+    <ol>
+      <li>Fill out the Request form. Check the boxes if it's commercial or rushed.</li>
+      <li>I get your request by email and reply with a final price using your email or Discord.</li>
+      <li>Once initial payment arrives, I start composing.</li>
+      <li>Follow your commission in the Queue (your name is shortened for privacy).</li>
+    </ol>
+    <p><a href="https://docs.google.com/document/d/1wEUbWNo9dk0hoHtJOPRfoWgE632EhbkCmjRAtBqdp_I/edit?usp=sharing" target="_blank" rel="noopener">Read the music TOS before commissioning</a></p>
+    <p><button class="btn" data-open="jukebox">Hear samples</button> <button class="btn" data-open="request">Request music</button></p>
+  </section>
+
+  <section class="win" id="w-request" data-title="Request a commission" data-x="340" data-y="40" data-w="480">
+    <form id="reqForm">
+      <label>Your name <input name="name" required maxlength="60"></label>
+      <label>Email <input name="email" type="email" required></label>
+      <label>Discord (optional) <input name="discord" maxlength="60"></label>
+      <label>What do you want?
+        <select name="type"><option value="art">Art</option><option value="music">Music</option><option value="sfx">Sound effects</option></select>
+      </label>
+      <label>Describe it <textarea name="description" rows="5" required></textarea></label>
+      <label>Reference links (optional) <input name="refs"></label>
+      <label>Your budget in USD (optional) <input name="budget" inputmode="decimal"></label>
+      <label class="chk"><input type="checkbox" name="commercial"> Commercial use (music/SFX: $40/hour)</label>
+      <label class="chk"><input type="checkbox" name="rushed"> Rushed (+10%)</label>
+      <label class="chk"><input type="checkbox" name="tos" required> I read the TOS for the type of commission I'm requesting</label>
+      <input name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="btn" type="submit">Send request</button>
+      <p class="msg" id="reqMsg" role="status"></p>
+    </form>
+  </section>
+
+  <section class="win" id="w-queue" data-title="Commission queue" data-x="380" data-y="80" data-w="440">
+    <p class="muted">Names are shortened for privacy. Updated by Johnathan.</p>
+    <ol id="queueList" class="queue"></ol>
+  </section>
+
+  <section class="win art" id="w-gallery" data-title="Art gallery" data-x="220" data-y="60" data-w="600">
+    <div id="artGrid" class="grid"></div>
+  </section>
+
+  <section class="win music" id="w-jukebox" data-title="Jukebox" data-x="260" data-y="90" data-w="480">
+    <ul id="trackList" class="tracks"></ul>
+  </section>
+
+  <section class="win" id="w-admin" data-title="Owner area" data-x="200" data-y="30" data-w="620">
+    <div id="loginBox">
+      <p>Enter the owner password to upload files and manage commissions.</p>
+      <form id="loginForm"><label>Password <input type="password" name="password" autocomplete="current-password" required></label>
+        <button class="btn">Unlock</button><p class="msg" id="loginMsg" role="status"></p></form>
+    </div>
+    <div id="adminBox" hidden>
+      <div class="tabs">
+        <button data-tab="t-comms" class="on">Commissions</button>
+        <button data-tab="t-art">Upload art</button>
+        <button data-tab="t-music">Upload music</button>
+        <button id="logoutBtn">Lock</button>
+      </div>
+      <div id="t-comms" class="tab"></div>
+      <div id="t-art" class="tab" hidden>
+        <form class="upForm" data-kind="art"><label>Title <input name="title" maxlength="80"></label>
+          <label>PNG file <input type="file" name="file" accept=".png,image/png" required></label>
+          <button class="btn">Upload art</button><p class="msg"></p></form>
+        <ul class="manage" id="manageArt"></ul>
+      </div>
+      <div id="t-music" class="tab" hidden>
+        <form class="upForm" data-kind="music"><label>Title <input name="title" maxlength="80"></label>
+          <label>WAV or MP3 file <input type="file" name="file" accept=".wav,.mp3,audio/wav,audio/mpeg" required></label>
+          <button class="btn">Upload track</button><p class="msg"></p></form>
+        <ul class="manage" id="manageMusic"></ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="lightbox" hidden><img alt=""></div>
+<footer id="taskbar" aria-label="Open windows"></footer>
+<script src="app.js"></script>
+</body>
+</html>
