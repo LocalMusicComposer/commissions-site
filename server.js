@@ -119,14 +119,15 @@ app.post('/api/request', async (req, res) => {
   if (b.website) return res.json({ ok: true }); // honeypot
   const hits = (reqLog.get(req.ip) || []).filter(t => t > Date.now() - 3600e3);
   if (hits.length >= 5) return res.status(429).json({ error: 'Too many requests. Try again later.' });
-  const name = String(b.name || '').trim().slice(0, 60), email = String(b.email || '').trim().slice(0, 120);
+    const name = String(b.name || '').trim().slice(0, 60), email = String(b.email || '').trim().slice(0, 120);
+  const discord = String(b.discord || '').trim().slice(0, 60);
   const description = String(b.description || '').trim().slice(0, 3000);
-  if (!name || !/^\S+@\S+\.\S+$/.test(email) || !description) return res.status(400).json({ error: 'Name, a valid email, and a description are required.' });
+  if (!discord || !description) return res.status(400).json({ error: 'Your Discord username and a description are required.' });
+  if (email && !/^\S+@\S+\.\S+$/.test(email)) return res.status(400).json({ error: 'That email address does not look valid.' });
   if (!b.tos) return res.status(400).json({ error: 'You need to agree to the TOS.' });
   hits.push(Date.now()); reqLog.set(req.ip, hits);
   const c = {
-    id: uid(), name, email, discord: String(b.discord || '').slice(0, 60),
-    type: ['art', 'music', 'sfx'].includes(b.type) ? b.type : 'art',
+    id: uid(), name: name || discord, email, discord,    type: ['art', 'music', 'sfx'].includes(b.type) ? b.type : 'art',
     description, refs: String(b.refs || '').slice(0, 1000), budget: String(b.budget || '').slice(0, 40),
     commercial: !!b.commercial, rushed: !!b.rushed, status: 'requested', price: '', due: '', notes: '',
     hidden: false, created: Date.now(), order: Date.now()
@@ -134,10 +135,9 @@ app.post('/api/request', async (req, res) => {
   db.commissions.push(c); save();
   mail(OWNER, `New ${c.type} commission request from ${c.name}`, `
     <h2>New commission request</h2>
-    <p><b>${esc(c.name)}</b> &lt;${esc(c.email)}&gt; ${c.discord ? '· Discord: ' + esc(c.discord) : ''}</p>
-    <p>Type: ${c.type} · Commercial: ${c.commercial ? 'YES' : 'no'} · Rushed: ${c.rushed ? 'YES' : 'no'} · Budget: ${esc(c.budget) || '-'}</p>
+    <p><b>${esc(c.name)}</b> · Discord: ${esc(c.discord)} · Email: ${esc(c.email) || 'not given'}</p>    <p>Type: ${c.type} · Commercial: ${c.commercial ? 'YES' : 'no'} · Rushed: ${c.rushed ? 'YES' : 'no'} · Budget: ${esc(c.budget) || '-'}</p>
     <p>${esc(c.description).replace(/\n/g, '<br>')}</p><p>References: ${esc(c.refs) || '-'}</p>`);
-  mail(c.email, 'Got your commission request!', `<p>Hi ${esc(c.name)},</p>
+    if (c.email) mail(c.email, 'Got your commission request!', `<p>Hi ${esc(c.name)},</p>
     <p>Thanks for your request. I'll reply with a final price using your email${c.discord ? ' or Discord' : ''}. Once initial payment is received, I'll start and you can follow progress in the public queue.</p><p>- Johnathan</p>`);
   res.json({ ok: true });
 });
