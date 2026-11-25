@@ -68,7 +68,7 @@ $('#reqForm').addEventListener('submit', async e => {
   const f = e.target, m = $('#reqMsg'), d = Object.fromEntries(new FormData(f));
   ['commercial', 'rushed', 'tos'].forEach(k => d[k] = f[k].checked);
   m.className = 'msg'; m.textContent = 'Sending...';
-  try { await post('/api/request', d); f.reset(); m.textContent = 'Sent! Check your email for a confirmation. I will reply with a price.'; }
+  try { await post('/api/request', d); f.reset(); m.textContent = 'Sent! I will reply with a price using your Discord or email.'; }
   catch (err) { m.className = 'msg err'; m.textContent = err.message; }
 });
 
@@ -140,8 +140,7 @@ async function loadComms() {
     <details class="comm" data-id="${c.id}">
       <summary>${esc(c.name)} (${esc(c.type)}) - ${esc(c.status)}${c.rushed ? ' - RUSH' : ''}${c.commercial ? ' - COMMERCIAL' : ''}</summary>
       <div class="in">
-        <p>${esc(c.email)}${c.discord ? ' | Discord: ' + esc(c.discord) : ''}${c.budget ? ' | Budget: $' + esc(c.budget) : ''}</p>
-        <p>${esc(c.description).replace(/\n/g, '<br>')}</p>
+        <p>Discord: ${esc(c.discord)}${c.email ? ' | ' + esc(c.email) : ''}${c.budget ? ' | Budget: $' + esc(c.budget) : ''}</p>        <p>${esc(c.description).replace(/\n/g, '<br>')}</p>
         ${c.refs ? `<p>Refs: ${esc(c.refs)}</p>` : ''}
         <div class="row">
           <label>Status <select data-f="status">${statuses.map(s => `<option ${s === c.status ? 'selected' : ''}>${s}</option>`).join('')}</select></label>
