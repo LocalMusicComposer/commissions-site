@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Owner area | Jonathan</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<link rel="stylesheet" href="/style.css"></head>
+<body data-page="admin"><div id="top"></div>
+<main>
+<section class="wrap phead"><h1>Owner area</h1><p>Upload art and music, and manage commission requests.</p></section>
+<section class="wrap sec">
+  <div id="loginBox" class="card formcard">
+    <form id="loginForm"><label>Password <input type="password" name="password" autocomplete="current-password" required></label>
+    <p><button class="btn">Unlock</button></p><p class="msg" id="loginMsg" role="status"></p></form>
+  </div>
+  <div id="adminBox" hidden>
+    <div class="tabs">
+      <button data-tab="t-comms" class="on">Commissions</button><button data-tab="t-art">Upload art</button>
+      <button data-tab="t-music">Upload music</button><button id="logoutBtn">Lock</button>
+    </div>
+    <div id="t-comms" class="tab"></div>
+    <div id="t-art" class="tab card formcard" hidden>
+      <form class="upForm" data-kind="art"><label>Title <input name="title" maxlength="80"></label>
+      <label>PNG file <input type="file" name="file" accept=".png,image/png" required></label>
+      <p><button class="btn">Upload art</button></p><p class="msg"></p></form>
+      <ul class="manage" id="manageArt"></ul>
+    </div>
+    <div id="t-music" class="tab card formcard" hidden>
+      <form class="upForm" data-kind="music"><label>Title <input name="title" maxlength="80"></label>
+      <label>WAV or MP3 file <input type="file" name="file" accept=".wav,.mp3,audio/wav,audio/mpeg" required></label>
+      <p><button class="btn">Upload track</button></p><p class="msg"></p></form>
+      <ul class="manage" id="manageMusic"></ul>
+    </div>
+  </div>
+</section>
+</main>
+<div id="foot"></div><script src="/site.js"></script></body></html>
