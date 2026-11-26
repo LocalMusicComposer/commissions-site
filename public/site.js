@@ -11,11 +11,11 @@ const post = (u, b, m = 'POST') => api(u, { method: m, body: JSON.stringify(b ||
 // ---------- shared header + footer ----------
 const pages = [['index', 'Home', '/'], ['art', 'Art', '/art.html'], ['music', 'Music', '/music.html'], ['gallery', 'Archive', '/gallery.html'], ['jukebox', 'Signals', '/jukebox.html'], ['queue', 'Flight log', '/queue.html']];const cur = document.body.dataset.page;
 const msg = '🚨 EMERGENCY BROADCAST · COMMISSIONS OPEN · Art from $10/hr · Music from $20/hr · Art in as little as 2 days · Saving for college ·';$('#top').innerHTML = `<div id="alert" role="status"><div class="track"><span>${msg}</span><span aria-hidden="true">${msg}</span></div></div>
-<header class="nav"><a class="logo" href="/">Jonathan's Commissions</a>
+<header class="nav"><a class="logo" href="/">Johnathan's Commissions</a>
 <button id="burger" aria-expanded="false" aria-controls="links">Menu</button>
 <nav id="links" aria-label="Main">${pages.map(([p, t, h]) => `<a href="${h}"${p === cur ? ' aria-current="page"' : ''}>${t}</a>`).join('')}<a class="cta" href="/request.html">Request</a></nav></header>`;
 $('#burger').onclick = e => { const o = $('#links').classList.toggle('open'); e.target.setAttribute('aria-expanded', o); };
-$('#foot').innerHTML = `<footer><div class="wrap"><span><b>Jonathan's Commissions</b><br>Saving for college, one commission at a time.<small>Design inspired by the Starset aesthetic. Not affiliated with or endorsed by Starset.</small></span>
+$('#foot').innerHTML = `<footer><div class="wrap"><span><b>Johnathan's Commissions</b><br>Saving for college, one commission at a time.<small>Design inspired by the Starset aesthetic. Not affiliated with or endorsed by Starset.</small></span>
 <span><a href="/art.html">Art</a> · <a href="/music.html">Music</a> · <a href="/queue.html">Queue</a> · <a href="/request.html">Request</a> · <a href="/admin.html">Owner login</a></span>
 <span>TOS: <a href="https://docs.google.com/document/d/1EU53gxlrldeMXIp0Zeh2bPcaq9cprxblpM7Hi5OETtk/edit?usp=sharing" target="_blank" rel="noopener">Art</a> · <a href="https://docs.google.com/document/d/1wEUbWNo9dk0hoHtJOPRfoWgE632EhbkCmjRAtBqdp_I/edit?usp=sharing" target="_blank" rel="noopener">Music</a></span></div></footer>`;
 
