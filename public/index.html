@@ -3,38 +3,78 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Johnathan's Commissions</title>
+<title>Jonathan's Commissions</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div id="moon" aria-hidden="true"></div>
+<div id="comet" aria-hidden="true"></div>
+
 <div id="alert" role="status"><div class="track">
-  <span>🚨 EMERGENCY COMMISSIONS OPEN · Art from $10/hr · Commercial use (art: $20/hour, music/SFX: $40/hour) · Art in as little as 2 days · Saving for college ·</span>
-  <span aria-hidden="true">🚨 EMERGENCY COMMISSIONS OPEN · Art from $10/hr · Commercial use (art: $20/hour, music/SFX: $40/hour) · Art in as little as 2 days · Saving for college ·</span>
+  <span>🚨 EMERGENCY COMMISSIONS OPEN · Art from $10/hr · Music from $20/hr · Art in as little as 2 days · Saving for college ·</span>
+  <span aria-hidden="true">🚨 EMERGENCY COMMISSIONS OPEN · Art from $10/hr · Music from $20/hr · Art in as little as 2 days · Saving for college ·</span>
 </div></div>
+
 <main id="desktop">
   <nav id="icons" aria-label="Open a window">
-    <button data-open="home">Welcome</button>
+    <span class="grp">Start</span>
+    <button data-open="home">Home</button>
+    <span class="grp">Commissions</span>
     <button data-open="art">Art comms</button>
     <button data-open="music">Music comms</button>
-    <button data-open="request">Request</button>
-    <button data-open="queue">Queue</button>
+    <span class="grp">Samples</span>
     <button data-open="gallery">Art gallery</button>
     <button data-open="jukebox">Jukebox</button>
+    <span class="grp">Order</span>
+    <button data-open="request">Request</button>
+    <button data-open="queue">Queue</button>
+    <span class="grp">Owner</span>
     <button data-open="admin">Owner login</button>
   </nav>
 
-  <section class="win" id="w-home" data-title="Welcome" data-x="230" data-y="30" data-w="460">
+  <section class="win" id="w-home" data-title="Mission control" data-x="190" data-y="20" data-w="580">
     <h1><span class="siren"></span>Emergency commissions are open.</h1>
-    <p class="sos">College fund emergency: art in as little as 2 days, music in up to a week.</p>
-    <p>I'm Johnathan. I draw object-head characters and compose game-style music, and I'm taking commissions to save for college.</p>
-    <p>Open a window from the left to read the details, check the queue, or send a request.</p>
-    <p><button class="btn" data-open="request">Request a commission</button></p>
+    <p class="sos">I'm saving for college. Art in as little as 2 days, music in up to a week, SFX in 3 days.</p>
+    <div class="status">
+      <span>Art from $10/hr</span><span>Music from $20/hr</span><span>SFX in 3 days</span>
+    </div>
+    <h2>Pick a path</h2>
+    <div class="paths">
+      <button class="path art" data-open="art"><b>Art commissions</b><span>Object head OCs, cel-shaded</span></button>
+      <button class="path music" data-open="music"><b>Music and SFX</b><span>Retro game OST style</span></button>
+    </div>
+    <h2>How to commission</h2>
+    <ol class="steps">
+      <li><b>Look at the samples</b><span>See my work before you decide.</span>
+        <div class="go"><button class="btn sm" data-open="gallery">Art gallery</button><button class="btn sm" data-open="jukebox">Jukebox</button></div></li>
+      <li><b>Read the TOS (required)</b><span>You must read the TOS for your commission type, and agree to it on the form.</span>
+        <div class="go"><a class="btn sm" href="https://docs.google.com/document/d/1EU53gxlrldeMXIp0Zeh2bPcaq9cprxblpM7Hi5OETtk/edit?usp=sharing" target="_blank" rel="noopener">Art TOS</a><a class="btn sm" href="https://docs.google.com/document/d/1wEUbWNo9dk0hoHtJOPRfoWgE632EhbkCmjRAtBqdp_I/edit?usp=sharing" target="_blank" rel="noopener">Music TOS</a></div></li>
+      <li><b>Send your request</b><span>Discord username is required. Check Commercial or Rushed if they apply.</span>
+        <div class="go"><button class="btn sm" data-open="request">Request form</button></div></li>
+      <li><b>I reply with a price</b><span>I'll message you on Discord (or email) with a final price.</span></li>
+      <li><b>Pay, then I start</b><span>PayPal (preferred), CashApp, or Venmo. I begin once initial payment arrives.</span></li>
+      <li><b>Follow your commission</b><span>Your name is shortened for privacy. Expect queue updates within a few days.</span>
+        <div class="go"><button class="btn sm" data-open="queue">Open the queue</button></div></li>
+    </ol>
+  </section>
+
+  <section class="win" id="w-queue" data-title="Live queue" data-right="1" data-x="0" data-y="20" data-w="340">
+    <p class="muted">Names are shortened for privacy. The queue is new, so expect updates within a few days.</p>
+    <ol id="queueList" class="queue"></ol>
+    <p><button class="btn sm" data-open="request">Join the queue</button></p>
+  </section>
+
+  <section class="win" id="w-fresh" data-title="Fresh drops" data-right="1" data-x="0" data-y="330" data-w="340">
+    <div id="freshArt" class="grid mini"></div>
+    <div id="freshTrack"></div>
+    <p><button class="btn sm" data-open="gallery">All art</button><button class="btn sm" data-open="jukebox">All music</button></p>
   </section>
 
   <section class="win art" id="w-art" data-title="Art commissions" data-x="260" data-y="70" data-w="520">
-    <h2><span class="siren"></span>Emergency Art Commissions are open</h2>    <p>I need to save money for college funds, so I'm opening art commissions to make a decent dent.</p>
+    <h2><span class="siren"></span>Emergency Art Commissions are open</h2>
+    <p>I need to save money for college funds, so I'm opening art commissions to make a decent dent.</p>
     <h3>Specialties</h3>
     <ul>
       <li>Object head OCs mainly. I'm learning humans, so there are object head examples and one human example.</li>
@@ -44,15 +84,18 @@
     <h3>Experience</h3>
     <p>4 years drawing in IbisPaint, mostly cel-shading with clean anatomical structure.</p>
     <h3>Prices</h3>
-    <p><b>$10 USD/hour</b> of work, <b>$20 USD/hour</b> for commercial use, plus a <b>10% rush fee</b>.</p>    <h3>Payment (in order of preference)</h3>
+    <p><b>$10 USD/hour</b> of work, <b>$20 USD/hour</b> for commercial use, plus a <b>10% rush fee</b>.</p>
+    <h3>Payment (in order of preference)</h3>
     <p>PayPal, CashApp, Venmo</p>
+    <p class="sos">You must read the art TOS and agree to it on the request form to commission me.</p>
     <p><a href="https://docs.google.com/document/d/1EU53gxlrldeMXIp0Zeh2bPcaq9cprxblpM7Hi5OETtk/edit?usp=sharing" target="_blank" rel="noopener">Read the art TOS</a> ·
        <a href="https://johnathans-art-comms.straw.page/home" target="_blank" rel="noopener">Art portfolio and contact links</a></p>
-    <p><button class="btn" data-open="gallery">See examples</button> <button class="btn" data-open="request">Request art</button></p>
+    <p class="next"><button class="btn" data-open="gallery">Next: see examples</button> <button class="btn" data-open="request">Request art</button></p>
   </section>
 
   <section class="win music" id="w-music" data-title="Music commissions" data-x="300" data-y="110" data-w="520">
-    <h2><span class="siren"></span>Emergency Music Commissions are open</h2>    <p>I need to save for college and I'm currently in debt, so I'm opening music commissions.</p>
+    <h2><span class="siren"></span>Emergency Music Commissions are open</h2>
+    <p>I need to save for college and I'm currently in debt, so I'm opening music commissions.</p>
     <h3>Specialties</h3>
     <ul>
       <li>Original game OST-style music, simple or complex.</li>
@@ -64,20 +107,28 @@
     <p><b>$20 USD/hour</b> of work, <b>$40 USD/hour</b> for commercial use, plus 10% for rushed work. SFX uses the same prices.</p>
     <h3>Payment (in order of preference)</h3>
     <p>PayPal, CashApp, Venmo</p>
-    <h3>How to commission me</h3>
-    <ol>
-      <li>Fill out the Request form. Check the boxes if it's commercial or rushed.</li>
-      <li>I get your request when I check the site and reply with a final price using your Discord or email.</li>
-      <li>Once initial payment arrives, I start composing.</li>
-      <li>Follow your commission in the Queue (your name is shortened for privacy).</li>
-    </ol>
-    <p><a href="https://docs.google.com/document/d/1wEUbWNo9dk0hoHtJOPRfoWgE632EhbkCmjRAtBqdp_I/edit?usp=sharing" target="_blank" rel="noopener">Read the music TOS before commissioning</a></p>
-    <p><button class="btn" data-open="jukebox">Hear samples</button> <button class="btn" data-open="request">Request music</button></p>
+    <p class="sos">You must read the music TOS and agree to it on the request form to commission me.</p>
+    <p><a href="https://docs.google.com/document/d/1wEUbWNo9dk0hoHtJOPRfoWgE632EhbkCmjRAtBqdp_I/edit?usp=sharing" target="_blank" rel="noopener">Read the music TOS</a></p>
+    <p class="next"><button class="btn" data-open="jukebox">Next: hear samples</button> <button class="btn" data-open="request">Request music</button></p>
+  </section>
+
+  <section class="win art" id="w-gallery" data-title="Art gallery" data-x="220" data-y="60" data-w="600">
+    <p>Click any image to enlarge it. More examples and contact links are on my <a href="https://johnathans-art-comms.straw.page/home" target="_blank" rel="noopener">art portfolio</a>.</p>
+    <div id="artGrid" class="grid"></div>
+    <p class="next"><button class="btn" data-open="request">Like what you see? Request art</button></p>
+  </section>
+
+  <section class="win music" id="w-jukebox" data-title="Jukebox" data-x="260" data-y="90" data-w="480">
+    <p>Press play on any track. Only one plays at a time.</p>
+    <ul id="trackList" class="tracks"></ul>
+    <p class="next"><button class="btn" data-open="request">Like what you hear? Request music</button></p>
   </section>
 
   <section class="win" id="w-request" data-title="Request a commission" data-x="340" data-y="40" data-w="480">
+    <p class="muted">Read first: <a href="https://docs.google.com/document/d/1EU53gxlrldeMXIp0Zeh2bPcaq9cprxblpM7Hi5OETtk/edit?usp=sharing" target="_blank" rel="noopener">Art TOS</a> ·
+      <a href="https://docs.google.com/document/d/1wEUbWNo9dk0hoHtJOPRfoWgE632EhbkCmjRAtBqdp_I/edit?usp=sharing" target="_blank" rel="noopener">Music TOS</a></p>
     <form id="reqForm">
-            <label>Your name (optional) <input name="name" maxlength="60"></label>
+      <label>Your name (optional) <input name="name" maxlength="60"></label>
       <label>Email (optional) <input name="email" type="email"></label>
       <label>Discord username <input name="discord" required maxlength="60"></label>
       <label>What do you want?
@@ -86,26 +137,13 @@
       <label>Describe it <textarea name="description" rows="5" required></textarea></label>
       <label>Reference links (optional) <input name="refs"></label>
       <label>Your budget in USD (optional) <input name="budget" inputmode="decimal"></label>
-      <label class="chk"><input type="checkbox" name="commercial"> Commercial use (music/SFX: $40/hour)</label>
+      <label class="chk"><input type="checkbox" name="commercial"> Commercial use (art: $20/hour, music/SFX: $40/hour)</label>
       <label class="chk"><input type="checkbox" name="rushed"> Rushed (+10%)</label>
-      <label class="chk"><input type="checkbox" name="tos" required> I read the TOS for the type of commission I'm requesting</label>
+      <label class="chk"><input type="checkbox" name="tos" required> I read the TOS for my commission type and I agree to it</label>
       <input name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
       <button class="btn" type="submit">Send request</button>
       <p class="msg" id="reqMsg" role="status"></p>
     </form>
-  </section>
-
-  <section class="win" id="w-queue" data-title="Commission queue" data-x="380" data-y="80" data-w="440">
-    <p class="muted">Names are shortened for privacy. Updated by Johnathan.</p>
-    <ol id="queueList" class="queue"></ol>
-  </section>
-
-  <section class="win art" id="w-gallery" data-title="Art gallery" data-x="220" data-y="60" data-w="600">
-    <div id="artGrid" class="grid"></div>
-  </section>
-
-  <section class="win music" id="w-jukebox" data-title="Jukebox" data-x="260" data-y="90" data-w="480">
-    <ul id="trackList" class="tracks"></ul>
   </section>
 
   <section class="win" id="w-admin" data-title="Owner area" data-x="200" data-y="30" data-w="620">
