@@ -130,3 +130,13 @@ if ($('#loginForm')) {
   });
   checkAdmin();
 }
+// ---------- visitor counter ----------
+fetch('/api/visit', { method: 'POST', credentials: 'same-origin' }).then(r => r.json()).then(s => {
+  const f = $('footer .wrap');
+  if (f) f.insertAdjacentHTML('beforeend', `<span>${s.newV.toLocaleString()} visitors · ${s.retV.toLocaleString()} returning</span>`);
+  const box = $('#statBox');
+  if (box) box.innerHTML = [
+    [s.newV, 'New visitors'], [s.retV, 'Returning visitors'], [s.views, 'Page views'],
+    [s.newV ? Math.round(100 * s.retV / s.newV) + '%' : '0%', 'Return rate']
+  ].map(([n, l]) => `<div><b>${Number(n) ? Number(n).toLocaleString() : n}</b><span>${l}</span></div>`).join('');
+}).catch(() => {});
