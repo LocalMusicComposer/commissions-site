@@ -14,8 +14,7 @@ if (!PASS) { console.error('ADMIN_PASSWORD is not set. Refusing to start.'); pro
 
 ['art', 'music'].forEach(k => fs.mkdirSync(path.join(DATA, 'uploads', k), { recursive: true }));
 const dbFile = path.join(DATA, 'db.json');
-let db = { art: [], music: [], commissions: [] };
-try { db = { ...db, ...JSON.parse(fs.readFileSync(dbFile, 'utf8')) }; } catch {}
+let db = { art: [], music: [], commissions: [], stats: { newV: 0, retV: 0, views: 0 } };try { db = { ...db, ...JSON.parse(fs.readFileSync(dbFile, 'utf8')) }; } catch {}
 const save = () => { fs.writeFileSync(dbFile + '.tmp', JSON.stringify(db, null, 1)); fs.renameSync(dbFile + '.tmp', dbFile); };
 const uid = () => crypto.randomBytes(6).toString('hex');
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -141,7 +140,24 @@ app.post('/api/request', async (req, res) => {
     <p>Thanks for your request. I'll reply with a final price using your email${c.discord ? ' or Discord' : ''}. Once initial payment is received, I'll start and you can follow progress in the public queue.</p><p>- Johnathan</p>`);
   res.json({ ok: true });
 });
-
+// ---------- visitor counter ----------
+const getCookie = (req, n) => ((req.headers.cookie || '').split(';').map(s => s.trim()).find(s => s.startsWith(n + '=')) || '').slice(n.length + 1);
+const isBot = ua => /bot|crawl|spider|slurp|preview|facebookexternalhit|curl|wget/i.test(ua || '');
+app.post('/api/visit', (req, res) => {
+  if (authed(req) || isBot(req.headers['user-agent'])) return res.json(db.stats);
+  const s = db.stats, flag = req.secure ? '; Secure' : '', first = Number(getCookie(req, 'vid')), cookies = [];
+  s.views++;
+  if (!first) {
+    s.newV++;
+    cookies.push(`vid=${Date.now()}; Path=/; Max-Age=31536000; SameSite=Lax${flag}`);
+  } else if (Date.now() - first > 6 * 3600e3 && !getCookie(req, 'rv')) {
+    s.retV++;
+    cookies.push(`rv=1; Path=/; Max-Age=31536000; SameSite=Lax${flag}`);
+  }
+  if (cookies.length) res.setHeader('Set-Cookie', cookies);
+  save(); res.json(s);
+});
+app.get('/api/stats', (req, res) => res.json(db.stats));
 // ---------- admin: commissions ----------
 const sorted = () => db.commissions.slice().sort((a, b) => a.order - b.order);
 app.get('/api/admin/commissions', needAuth, (req, res) => res.json(sorted()));
