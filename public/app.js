@@ -23,7 +23,7 @@ wins.forEach((w, i) => {
   w.style.width = (w.dataset.w || 480) + 'px';
   w.style.left = (+w.dataset.x + i * 6) + 'px';
   w.style.top = (+w.dataset.y + i * 6) + 'px';
-  w.hidden = true;
+  if (w.dataset.right) w.style.left = Math.max(190, innerWidth - (+w.dataset.w || 480) - 30) + 'px';  w.hidden = true;
   $('button', bar).onclick = () => closeWin(w);
   w.addEventListener('pointerdown', () => focusWin(w));
   let drag;
@@ -39,8 +39,7 @@ wins.forEach((w, i) => {
   });
   bar.addEventListener('pointerup', () => drag = null);
 });
-const loaders = { queue: loadQueue, gallery: loadGallery, jukebox: loadGallery, admin: checkAdmin };
-function openWin(id) {
+const loaders = { queue: loadQueue, gallery: loadGallery, jukebox: loadGallery, fresh: loadGallery, admin: checkAdmin };function openWin(id) {
   const w = $('#w-' + id); if (!w) return;
   w.hidden = false; focusWin(w);
   if (loaders[id]) loaders[id]();
@@ -51,7 +50,9 @@ function drawTaskbar() {
   const open = wins.filter(w => !w.hidden);
   const top = open.reduce((a, b) => (+b.dataset.z > +(a?.dataset.z || 0) ? b : a), null);
   $('#taskbar').innerHTML = '';
-  open.forEach(w => {
+  const home = document.createElement('button');
+  home.textContent = 'Home'; home.className = 'home'; home.dataset.open = 'home';
+  $('#taskbar').appendChild(home);  open.forEach(w => {
     const b = document.createElement('button');
     b.textContent = w.dataset.title; if (w === top) b.className = 'front';
     b.onclick = () => focusWin(w);
@@ -59,8 +60,8 @@ function drawTaskbar() {
   });
 }
 document.addEventListener('click', e => { const t = e.target.closest('[data-open]'); if (t) openWin(t.dataset.open); });
-openWin('home');
-if (location.hash === '#queue') openWin('queue');
+if (innerWidth >= 1150) { openWin('fresh'); openWin('queue'); }
+openWin('home');if (location.hash === '#queue') openWin('queue');
 
 // ---------- request form ----------
 $('#reqForm').addEventListener('submit', async e => {
@@ -90,10 +91,16 @@ async function loadGallery() {
   $('#trackList').innerHTML = g.music.length ? g.music.map(t =>
     `<li><b>${esc(t.title)}</b><audio controls preload="none" src="/files/music/${esc(t.file)}"></audio></li>`).join('')
     : '<li>No tracks uploaded yet.</li>';
-  return g;
-}
-$('#artGrid').addEventListener('click', e => {
-  const b = e.target.closest('button'); if (!b) return;
+  $('#freshArt').innerHTML = g.art.slice(0, 4).map(a =>
+    `<button data-src="/files/art/${esc(a.file)}" title="${esc(a.title)}"><img loading="lazy" src="/files/art/${esc(a.file)}" alt="${esc(a.title)}"></button>`).join('')
+    || '<p class="muted">Art samples coming soon.</p>';
+  const t0 = g.music[0];
+  $('#freshTrack').innerHTML = t0
+    ? `<p><b>Latest track:</b> ${esc(t0.title)}</p><audio controls preload="none" src="/files/music/${esc(t0.file)}"></audio>`
+    : '<p class="muted">Music samples coming soon.</p>';
+  return g;}
+document.addEventListener('click', e => {
+  const b = e.target.closest('button[data-src]'); if (!b) return;
   $('#lightbox img').src = b.dataset.src; $('#lightbox').hidden = false;
 });
 $('#lightbox').onclick = () => $('#lightbox').hidden = true;
@@ -170,3 +177,4 @@ $('#t-comms').addEventListener('click', async e => {
     if (open && act !== 'del') $(`.comm[data-id="${id}"]`)?.setAttribute('open', '');
   } catch (err) { alert(err.message); }
 });
+setInterval(() => { if (!$('#w-queue').hidden) loadQueue(); }, 60000);
