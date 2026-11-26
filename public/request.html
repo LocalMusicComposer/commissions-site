@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Request a commission | Jonathan</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<link rel="stylesheet" href="/style.css"></head>
+<body data-page="request"><div id="top"></div>
+<main>
+<section class="wrap phead"><h1>Request a commission</h1>
+<p>Read the TOS for your commission type first: <a href="https://docs.google.com/document/d/1EU53gxlrldeMXIp0Zeh2bPcaq9cprxblpM7Hi5OETtk/edit?usp=sharing" target="_blank" rel="noopener">Art TOS</a> · <a href="https://docs.google.com/document/d/1wEUbWNo9dk0hoHtJOPRfoWgE632EhbkCmjRAtBqdp_I/edit?usp=sharing" target="_blank" rel="noopener">Music TOS</a>. I'll reply with a final price on Discord or email.</p></section>
+<section class="wrap sec"><form id="reqForm" class="card formcard">
+  <label>Your name (optional) <input name="name" maxlength="60"></label>
+  <label>Email (optional) <input name="email" type="email"></label>
+  <label>Discord username <input name="discord" required maxlength="60"></label>
+  <label>What do you want?
+    <select name="type"><option value="art">Art</option><option value="music">Music</option><option value="sfx">Sound effects</option></select></label>
+  <label>Describe it <textarea name="description" rows="5" required></textarea></label>
+  <label>Reference links (optional) <input name="refs"></label>
+  <label>Your budget in USD (optional) <input name="budget" inputmode="decimal"></label>
+  <label class="chk"><input type="checkbox" name="commercial"> Commercial use (art: $20/hour, music/SFX: $40/hour)</label>
+  <label class="chk"><input type="checkbox" name="rushed"> Rushed (+10%)</label>
+  <label class="chk"><input type="checkbox" name="tos" required> I read the TOS for my commission type and I agree to it</label>
+  <input name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+  <p><button class="btn" type="submit">Send request</button></p>
+  <p class="msg" id="reqMsg" role="status"></p>
+</form></section>
+</main>
+<div id="foot"></div><script src="/site.js"></script></body></html>
